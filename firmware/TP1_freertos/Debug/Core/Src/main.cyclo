@@ -1,0 +1,11 @@
+../Drivers/CMSIS/Include/core_cm7.h:2147:34:__NVIC_SystemReset	1
+../Core/Src/main.c:70:5:__io_putchar	1
+../Core/Src/main.c:77:6:HAL_UART_RxCpltCallback	3
+../Core/Src/main.c:91:6:task_blink_led	1
+../Core/Src/main.c:101:6:task_uart	1
+../Core/Src/main.c:115:6:taskGive	1
+../Core/Src/main.c:134:6:taskTake	1
+../Core/Src/main.c:162:5:main	1
+../Core/Src/main.c:283:6:SystemClock_Config	3
+../Core/Src/main.c:337:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:354:6:Error_Handler	1
