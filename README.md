@@ -21,3 +21,6 @@ Réponse :
 
 1.1.1 En quoi le paramètre TOTAL_HEAP_SIZE a-t-il de l’importance ?
 Réponse : Il est 15360, c'est la taille de mémoire. 
+
+1.1.2  Quel est le rôle de la macro portTICK_PERIOD_MS ?
+Réponse : 
