@@ -134,7 +134,7 @@ int led(int argc, char ** argv)
 	else
 	{
 
-			leddelay = atoi(argv[1]);
+		leddelay = atoi(argv[1]);
 
 	}
 	return 0;
@@ -186,10 +186,8 @@ int main(void)
 	MX_USART1_UART_Init();
 	/* USER CODE BEGIN 2 */
 
-	BaseType_t ret;
-
-	ret = xTaskCreate(TaskShell, "TaskShell", 256, NULL, 8, &handle_TaskShell);
-	ret = xTaskCreate(Task_led, "Task_led", 256, NULL, 7, &handle_Task_led);
+	xTaskCreate(TaskShell, "TaskShell", 256, NULL, 8, &handle_TaskShell);
+	xTaskCreate(Task_led, "Task_led", 256, NULL, 7, &handle_Task_led);
 	vTaskStartScheduler();
 
 	//	shell_init();
