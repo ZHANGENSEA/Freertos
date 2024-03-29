@@ -32,47 +32,35 @@ Réponse :
 Tout d'abord, déclarez un mutex global : 
 SemaphoreHandle_t xMutex;
 Étape 2: Créer le Mutex
-Ensuite, dans votre fonction d'initialisation (par exemple, avant le démarrage de l'ordonnanceur), créez le mutex :
-void MX_FREERTOS_Init(void)
-{
-    /* USER CODE BEGIN Init */
-    xMutex = xSemaphoreCreateMutex();
-    if (xMutex == NULL)
-    {
-        // Gestion de l'erreur si le mutex n'a pas pu être créé
-    }
-    /* USER CODE END Init */
-}
+Ensuite, dans le main(), créez le mutex :
+xMutex = xSemaphoreCreateMutex();
 Étape 3: Utiliser le Mutex autour de printf
 Modifiez vos tâches pour qu'elles acquièrent le mutex avant d'appeler printf et le relâchent après :
 void task1(void * pvParameters)
 {
-    int delay = (int) pvParameters;
+	int delay = (int) pvParameters;
 
-    for(;;)
-    {
-        if (xSemaphoreTake(xMutex, portMAX_DELAY) == pdPASS)
-        {
-            printf("Je suis la tache 1 et je m'endors pour %d ticks\r\n", delay);
-            xSemaphoreGive(xMutex);
-        }
-        vTaskDelay(delay);
-    }
+	for(;;)
+	{
+		xSemaphoreTake(xMutex, portMAX_DELAY);
+		printf("Je suis la tache 1 et je m'endors pour %d ticks\r\n", delay);
+		xSemaphoreGive(xMutex);
+		vTaskDelay(delay);
+
+	}
 }
 
 void task2(void * pvParameters)
 {
-    int delay = (int) pvParameters;
+	int delay = (int) pvParameters;
 
-    for(;;)
-    {
-        if (xSemaphoreTake(xMutex, portMAX_DELAY) == pdPASS)
-        {
-            printf("Je suis la tache 2 et je m'endors pour %d ticks\r\n", delay);
-            xSemaphoreGive(xMutex);
-        }
-        vTaskDelay(delay);
-    }
+	for(;;)
+	{
+		xSemaphoreTake(xMutex, portMAX_DELAY);
+		printf("Je suis la tache 2 et je m'endors pour %d ticks\r\n", delay);
+		xSemaphoreGive(xMutex);
+		vTaskDelay(delay);
+	}
 }
 En conclusion, cette solution s'assure que lorsque la tâche 1 utilise printf, la tâche 2 doit attendre que la tâche 1 ait terminé avant de pouvoir utiliser printf, et vice-versa. Cela empêche l'interférence entre les appels à printf et garantit que les messages de sortie ne seront pas mélangés ou corrompus.
 
