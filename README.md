@@ -76,6 +76,18 @@ int fonction(int argc, char ** argv)
 	return 0;
 }
 
+2.1.2 Modifier la fonction pour faire apparaître la liste des arguments.
+Réponse : 
+int fonction(int argc, char ** argv)
+{
+	printf("argc = %d\r\n", argc);
+	for (int itr = 0; itr < argc; itr++)
+	{
+		printf("argv[%d] = %s\r\n", itr, argv[itr]);
+	}
+	return 0;
+}
+
 2.1.3 Expliquer les mécanismes qui mènent à l’exécution de la fonction.
 Réponse : D'abord, on a l'initialisation du Shell 'shell_init();' pour laisser le shell préparer à recevoir et à traiter les commandes. Ensuite, on utilise 'shell_add' pour difinir les identifiants comme des caractères 'f' et 'a', le nom de fonction comme 'fonction' et 'addition', et la description du fonction comme 'fonction inutile'. Et puis, on a l'exécution du Shell, shell_run() démarre la boucle principale du shell, qui écoute les entrées de l'utilisateur via l'UART. Pendant l'exécution du Shell, on a lu les arguments extraits de la ligne de commande par la function uart_read, et il y a certains cas, par exemple '\r'(entrée) pour finir l'entre des arguments, '\b'(espace) pour deleter les arguments, et il a aussi défini le mot clé pour stoquer les caractères comme par une espace. 
 En general, les arguments extraits de la ligne de commande sont passés à la fonction cible sous forme d'un tableau de chaînes (char** argv) et leur nombre (int argc) pour les traiter. Après l'exécution de la commande, le shell revient en attente pour la prochaine entrée utilisateur, continuant ainsi la boucle.
