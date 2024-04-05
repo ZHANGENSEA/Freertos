@@ -101,62 +101,33 @@ Réponse : On peut utiliser sémaphore pour bloquer une tâche et l'éveil une a
 2.2 Que se passe-t-il si l’on ne respecte pas les priorités décrites précédemment ?
 Réponse : Si l'on ne respecte pas les priorités décrites précédemment, FreeRTOS peut échouer avec une assertion pour indiquer que la priorité de l'interruption n'est pas configurée correctement pendant les vérifications, et il y a préemption par d'autres interruptions qui feraient appel aux primitives de FreeRTOS. A cause d'interruptions de priorité plus élevée occupant le CPU sans permettre aux opérations de FreeRTOS nécessaires de s'exécuter, des situations où des tâches ou des gestionnaires d'interruption pourraient être bloqués indéfiniment. 
 
-2.3
+3.1.1 Quel est le nom de la zone réservée à l’allocation dynamique ?
+Réponse : Tas (Heap). C'est la zone dans laquelle sont écrites les zones mémoires allouées dynamiquement(malloc() ou calloc()).
 
-Étape 1 : Déclaration de la Queue ou de la Variable Globale
+3.1.2 Est-ce géré par FreeRTOS ou la HAL ?
+Réponse : Il est défini dans FreeRTOSConfig.h, donc il est géré par FreeRTOS.
 
-Commencez par déclarer une queue (ou une variable globale si vous préférez utiliser les notifications de tâche) pour communiquer la période de clignotement entre la fonction led() et la tâche de clignotement.
+3.1.4 Notez la mémoire RAM et Flash utilisée
+Réponse : RAM - 301.06KB(Free) - 19.94 KB(Used) - 5.92% (Usage) , FLASH - 996.22KB (Free) - 27.78KB(Used) - 2.71%(Usage). 
 
-c
+3.1.5 et 6 Créez des tâches bidons jusqu’à avoir une erreur et notez la nouvelle utilisation mémoire.
 
-QueueHandle_t xBlinkRateQueue;
+Réponse : Lors de la création de tâche, par exemple 200, on constate qu'avec l'allocation mémoire que l'on a dans la question 3.1.4, que le nombre de tâches qui se créent ne va pas jusqu'à 200 (car on fixe le nombre de tâches à créer à 200) mais s'arrêtent à 12. L'utilisation mémoire reste la même ici.
 
-Étape 2 : Initialisation
+3.1.7 et 8 Dans CubeMX, augmentez la taille du tas (TOTAL_HEAP_SIZE). Générez le code, compilez et testez et notez la nouvelle utilisation mémoire. Expliquez les trois relevés.
 
-Initialisez la queue dans votre fonction principale (par exemple, dans main() avant de démarrer le scheduler).
+Réponse : Si on augmente la taille du tas, on voit que le pourcentage de l'usage du RAM augmente aussi. Par exemple, TOTAL_HEAP_SIZE : 15360 -> 153600, l'usage de RAM : 5.92% -> 47.84%.
+Concernant le nombre de tâches, toujours fixées à 200, on parvient à obtenir la création de 135 tâches dorénavant. Cela est dû à la disponibilité plus importante d'espace mémoire. Pour les explications des deux autres relevés, cf les questions 5 et 6.
 
-c
+3.2.2 Dans CubeMX, configurez CHECK_FOR_STACK_OVERFLOW
+Réponse : ioc - FREERTOS- ConfigParametres - Check_for_stack_overflow - Option 2
 
-xBlinkRateQueue = xQueueCreate(1, sizeof(uint32_t));
-if (xBlinkRateQueue == NULL) {
-    // Gestion d'erreur : La création de la queue a échoué.
-}
 
-Étape 3 : Création de la Tâche de Clignotement
 
-Ensuite, créez la tâche qui gère le clignotement de la LED. Cette tâche attend les messages sur la queue pour ajuster la période de clignotement.
 
-c
 
-void TaskBlinkLED(void *pvParameters) {
-    uint32_t ulPeriod = 0; // Période de clignotement en ms, 0 signifie LED éteinte.
 
-    for (;;) {
-        // Essayez de lire la période depuis la queue.
-        if (xQueueReceive(xBlinkRateQueue, &ulPeriod, portMAX_DELAY) == pdPASS) {
-            if (ulPeriod == 0) {
-                // Éteindre la LED.
-                HAL_GPIO_WritePin(GPIOI, GPIO_PIN_1, GPIO_PIN_RESET);
-            } else {
-                // Clignoter la LED avec la période spécifiée.
-                while(ulPeriod > 0) {
-                    HAL_GPIO_TogglePin(GPIOI, GPIO_PIN_1);
-                    vTaskDelay(pdMS_TO_TICKS(ulPeriod / 2));
-                }
-            }
-        }
-    }
-}
 
-Étape 4 : Fonction led()
 
-Enfin, implémentez la fonction led() qui est appelable depuis le shell pour configurer la période de clignotement de la LED.
 
-c
-
-void led(uint32_t ulPeriod) {
-    if (xQueueSend(xBlinkRateQueue, &ulPeriod, portMAX_DELAY) != pdPASS) {
-        // Gestion d'erreur : Impossible d'envoyer la période à la queue.
-    }
-}
 
