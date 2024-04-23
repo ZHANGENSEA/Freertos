@@ -122,6 +122,9 @@ Concernant le nombre de tâches, toujours fixées à 200, on parvient à obtenir
 3.2.2 Dans CubeMX, configurez CHECK_FOR_STACK_OVERFLOW
 Réponse : ioc - FREERTOS- ConfigParametres - Check_for_stack_overflow - Option 2
 
+3.3.4 Lancez le programme puis mettez-le en pause pour voir les statistiques.
+Réponse : Dans ce projet, on peut voir les statistiques des tâches : 
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/6867f110-c6f6-437f-945f-fb27b61f21fd)
 
 
 
