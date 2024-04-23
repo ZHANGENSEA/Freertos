@@ -126,6 +126,9 @@ Réponse : ioc - FREERTOS- ConfigParametres - Check_for_stack_overflow - Option 
 Réponse : Dans ce projet, on peut voir les statistiques des tâches : 
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/6867f110-c6f6-437f-945f-fb27b61f21fd)
 
+3.3.5 Cherchez dans CubeMX comment faire pour afficher l’utilisation de la pile. En mode debug, cliquez sur Toggle Stack Checking (dans l’onglet FreeRTOSTask List en haut à droite).
+Réponse : Une fois dans le mode débogage, cherchez la vue "FreeRTOS Task List", et puis cliquez sur Toggle Stack Checking,
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/5036e635-0de7-464f-8411-d20964369e02)
 
 
 
