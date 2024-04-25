@@ -130,6 +130,14 @@ Réponse : Dans ce projet, on peut voir les statistiques des tâches :
 Réponse : Une fois dans le mode débogage, cherchez la vue "FreeRTOS Task List", et puis cliquez sur Toggle Stack Checking,
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/5036e635-0de7-464f-8411-d20964369e02)
 
+3.3.7 Affichez les sémaphores et les queues.
+Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/f5992e24-6a9c-4330-8c4b-423226bc4c34)
+
+3.4 écrire une fonction appelable depuis le shell pour afficher les statistiques dans le termainal.
+Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/514d0055-9e53-4c06-9731-953772eaf81f)
+
+
+
 
 
 
