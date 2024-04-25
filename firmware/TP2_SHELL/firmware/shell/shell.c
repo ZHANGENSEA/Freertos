@@ -23,6 +23,8 @@ static shell_func_t shell_func_list[SHELL_FUNC_LIST_MAX_SIZE];
 
 static char print_buffer[BUFFER_SIZE];
 
+
+
 static char uart_read() {
 	char c;
 
@@ -147,5 +149,6 @@ int shell_run() {
 		}
 		shell_exec(cmd_buffer);
 	}
+
 	return 0;
 }
