@@ -136,6 +136,30 @@ Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/f599
 3.4 écrire une fonction appelable depuis le shell pour afficher les statistiques dans le termainal.
 Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/514d0055-9e53-4c06-9731-953772eaf81f)
 
+4.1 Interfacer l'ADXL345
+![74291a6f269ae7ce4bf9c57341dd365](https://github.com/ZHANGENSEA/Freertos/assets/149954066/8e00e410-7264-4c90-b440-f34cf036fb59)
+
+4.2 Premiers tests
+4.2.2 Dans la fonction shell, écrivez un code permettant de récupérer la valeur du DEVID, et vérifiez si elle est correcte.
+Réponse : Selon le datasheet de l'ADXL345, on trouve que le registre 0x00 est "Read only" et la valeur est fixée à 0xE5, donc le résultat est correcte.
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/70a14d57-65df-4ceb-9611-9e07222867fe)
+
+4.2.3 Quelles sont les valeurs à mettre dans les registres INT_ENABLE et POWER_CTL pour démarrer la mesure et délencher une interruption à chaque mesure ?
+Réponse : Pour démarrer la mesure et délencher une interruption à chaque mesure,  la valeur doit mettre D7( DATA_READY) à 1 et les autres à 0 dans les registres INT_ENABLE ; D3(Measure) à 1 et les autres à 0 dans le registre POWER_CTL.
+
+4.2.4 À la suite du code précédent, dans la fonction shell, écrivez un code permettant de lire 4 valeurs consécutives. Utilisez du polling pour attendre que la
+broche INT1 passe à High.
+Réponse : On a lu x,y,z à quatre fois par une boucle : 
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/f62b8919-54c1-4e4f-8fcd-9acc2069aa26)
+Le résultat : 
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/59a387d6-dfc5-4110-99e0-a633e95d4b54)
+
+4.2.5Faites la moyenne de ces quatre valeurs, mettez les accélérations en forme,et affichez-les à travers l’UART.
+Réponse : On a créé le SUM dans la boucle pour mettre chaque valeur dans la tableau SUM, et fait la division hors boucle et les affiché.
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/9236b861-c662-4f3a-8eac-aca180d4270b)
+Le Résultat : 
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/7738fcb9-7dfe-4f5b-b5af-33e5dccf8cfc)
+
 
 
 
