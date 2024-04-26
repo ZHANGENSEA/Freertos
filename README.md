@@ -101,6 +101,10 @@ Réponse : On peut utiliser sémaphore pour bloquer une tâche et l'éveil une a
 2.2 Que se passe-t-il si l’on ne respecte pas les priorités décrites précédemment ?
 Réponse : Si l'on ne respecte pas les priorités décrites précédemment, FreeRTOS peut échouer avec une assertion pour indiquer que la priorité de l'interruption n'est pas configurée correctement pendant les vérifications, et il y a préemption par d'autres interruptions qui feraient appel aux primitives de FreeRTOS. A cause d'interruptions de priorité plus élevée occupant le CPU sans permettre aux opérations de FreeRTOS nécessaires de s'exécuter, des situations où des tâches ou des gestionnaires d'interruption pourraient être bloqués indéfiniment. 
 
+2.3
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/698e773a-f284-4f4f-a824-127ef49843c0)
+
+
 3.1.1 Quel est le nom de la zone réservée à l’allocation dynamique ?
 Réponse : Tas (Heap). C'est la zone dans laquelle sont écrites les zones mémoires allouées dynamiquement(malloc() ou calloc()).
 
