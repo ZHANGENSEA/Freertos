@@ -256,7 +256,7 @@ void lire4(int argc, char ** argv)
 
 
 //TP 2.3
-/*void Task_led ( void *pvParameters)
+void Task_led ( void *pvParameters)
 {
 
 	for(;;){
@@ -282,7 +282,7 @@ int led(int argc, char ** argv)
 	}
 	return 0;
 
-}*/
+}
 
 //TP 2.4
 
@@ -314,7 +314,7 @@ void TaskShell(void *p)
 		shell_init();
 		shell_add('f', fonction, "Une fonction inutile");
 		shell_add('a', addition, "Addition");
-		//		shell_add('l', led, "Clignoter le LED");
+		shell_add('l', led, "Clignoter le LED");
 		shell_add('s', spam, "Afficher le message");
 		shell_add('i', statistique, "Afficher les statistiques");
 		shell_add('t', test, "Tester l'ADXL345");
