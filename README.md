@@ -154,8 +154,8 @@ Réponse : On a lu x,y,z à quatre fois par une boucle :
 Le résultat : 
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/59a387d6-dfc5-4110-99e0-a633e95d4b54)
 
-4.2.5Faites la moyenne de ces quatre valeurs, mettez les accélérations en forme,et affichez-les à travers l’UART.
-Réponse : On a créé le SUM dans la boucle pour mettre chaque valeur dans la tableau SUM, et fait la division hors boucle et les affiché.
+4.2.5 Faites la moyenne de ces quatre valeurs, mettez les accélérations en forme,et affichez-les à travers l’UART.
+Réponse : On a créé le SUM dans la boucle pour mettre chaque valeur dans la tableau SUM, et fait la division hors boucle afin de les afficher.
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/9236b861-c662-4f3a-8eac-aca180d4270b)
 Le Résultat : 
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/7738fcb9-7dfe-4f5b-b5af-33e5dccf8cfc)
