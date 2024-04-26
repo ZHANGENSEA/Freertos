@@ -136,6 +136,12 @@ Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/f599
 3.4 écrire une fonction appelable depuis le shell pour afficher les statistiques dans le termainal.
 Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/514d0055-9e53-4c06-9731-953772eaf81f)
 
+4.1 Interfacer l'ADXL345
+![74291a6f269ae7ce4bf9c57341dd365](https://github.com/ZHANGENSEA/Freertos/assets/149954066/8e00e410-7264-4c90-b440-f34cf036fb59)
+
+4.2 Premiers tests
+
+
 
 
 
