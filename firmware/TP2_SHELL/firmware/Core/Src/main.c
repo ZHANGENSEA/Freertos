@@ -154,11 +154,15 @@ void statistique (int argc, char ** argv)
 
 uint8_t ADXL345_ReadRegister(uint8_t regAddress)
 {
+
 	uint8_t receivedVal = 0;
+
 	uint8_t address = regAddress | 0x80; // Le bit MSB doit être mis à 1 pour indiquer une lecture.
+
 
 	// Sélectionner l'ADXL345 en passant le pin NSS à bas.
 	HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_RESET);
+
 
 	// Envoyer l'adresse du registre à lire.
 	HAL_SPI_Transmit(&hspi2, &address, 1, HAL_MAX_DELAY);
@@ -175,17 +179,17 @@ uint8_t ADXL345_ReadRegister(uint8_t regAddress)
 uint8_t ADXL345_WriteRegister(uint8_t regAddress, uint8_t value)
 {
 	uint8_t data[2];
-	data[0] = regAddress|0x40;  // multibyte write
+	data[0] = regAddress;
 	data[1] = value;
 
 	// Sélectionner l'ADXL345 en passant le pin NSS à bas.
 	HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_RESET);
 
 	// Envoyer l'adresse du registre à lire.
-	HAL_SPI_Transmit(&hspi2, &data[0], 1, HAL_MAX_DELAY);
+	HAL_SPI_Transmit(&hspi2, &data[0], 2, HAL_MAX_DELAY);
 
 	// LEnvoyer la valuer du registre à lire.
-	HAL_SPI_Receive(&hspi2, &data[1], 1, HAL_MAX_DELAY);
+	HAL_SPI_Receive(&hspi2, &data[1], 2, HAL_MAX_DELAY);
 
 	// Désélectionner l'ADXL345 en passant le pin NSS à haut.
 	HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_SET);
@@ -194,10 +198,61 @@ uint8_t ADXL345_WriteRegister(uint8_t regAddress, uint8_t value)
 
 void test (int argc, char ** argv)
 {
-	ADXL345_WriteRegister(0x00, 0x15);
-	uint8_t devid = ADXL345_ReadRegister(0x00); // Adresse du registre DEVID
-	printf("DEVID: 0x%X\n", devid); // Afficher la valeur lue, devrait être 0xE5 pour ADXL345
+
+	uint8_t add[2] = {0x80, 0};
+	uint8_t data[2] = {0, 0};
+
+	HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_RESET);
+	HAL_SPI_TransmitReceive(&hspi2, add, data, 2, 100);
+	HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_SET);
+
+
+	printf("DEVID(0x00): 0x%2x\r\n", data[1]); // Afficher la valeur lue, devrait être 0xE5 pour ADXL345
+
 }
+
+void lire4(int argc, char ** argv)
+{
+	ADXL345_WriteRegister(0x31, 0x01);
+	ADXL345_WriteRegister(0x2d, 0x00);
+	ADXL345_WriteRegister(0x2d, 0x08);
+
+	uint8_t data[6]; // Tableau pour stocker les données des axes x, y, z (2 octets par axe)
+	uint8_t regAddress = 0x32; // Adresse du premier registre de données de l'axe X
+	regAddress |= 0x80; // Le bit de lecture doit être mis à 1
+
+	uint16_t Sumx[4];
+	uint16_t Sumy[4];
+	uint16_t Sumz[4];
+
+	for(int i = 0; i < 4; i++){
+
+		HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi2, &regAddress, 1, HAL_MAX_DELAY);
+		HAL_SPI_Receive(&hspi2, data, 6, HAL_MAX_DELAY);
+		HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_SET);
+
+		uint16_t x = (int16_t)(data[1] << 8) | data[0];
+		uint16_t y = (int16_t)(data[3] << 8) | data[2];
+		uint16_t z = (int16_t)(data[5] << 8) | data[4];
+
+		printf("X: %d, Y: %d, Z: %d\r\n", x, y, z);
+
+		Sumx[i] = x;
+		Sumy[i] = y;
+		Sumz[i] = z;
+	}
+
+	uint16_t Moyx = (Sumx[0]+Sumx[1]+Sumx[2]+Sumx[3])/4;
+	uint16_t Moyy = (Sumy[0]+Sumy[1]+Sumy[2]+Sumy[3])/4;
+	uint16_t Moyz = (Sumz[0]+Sumz[1]+Sumz[2]+Sumz[3])/4;
+
+	printf("La moyenne de x : %d\r\n",Moyx);
+	printf("La moyenne de y : %d\r\n",Moyy);
+	printf("La moyenne de z : %d\r\n",Moyz);
+
+}
+
 
 
 //TP 2.3
@@ -263,6 +318,7 @@ void TaskShell(void *p)
 		shell_add('s', spam, "Afficher le message");
 		shell_add('i', statistique, "Afficher les statistiques");
 		shell_add('t', test, "Tester l'ADXL345");
+		shell_add('l',lire4, "Lire 4 valeurs consecutives dans l'ADXL345");
 		shell_run();
 	}
 }
@@ -374,11 +430,6 @@ int main(void)
 
 	vTaskStartScheduler();
 
-	//	shell_init();
-	//	shell_add('f', fonction, "Une fonction inutile");
-	//	shell_add('a', addition, "Addition");
-	//	shell_add('l', led, "Clignoter le LED");
-	//	shell_run();
 	// Comme pour le scheduler, il ne se passe plus rien après cette ligne
 	/* USER CODE END 2 */
 
