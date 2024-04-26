@@ -101,10 +101,12 @@ Réponse : On peut utiliser sémaphore pour bloquer une tâche et l'éveil une a
 2.2 Que se passe-t-il si l’on ne respecte pas les priorités décrites précédemment ?
 Réponse : Si l'on ne respecte pas les priorités décrites précédemment, FreeRTOS peut échouer avec une assertion pour indiquer que la priorité de l'interruption n'est pas configurée correctement pendant les vérifications, et il y a préemption par d'autres interruptions qui feraient appel aux primitives de FreeRTOS. A cause d'interruptions de priorité plus élevée occupant le CPU sans permettre aux opérations de FreeRTOS nécessaires de s'exécuter, des situations où des tâches ou des gestionnaires d'interruption pourraient être bloqués indéfiniment. 
 
-2.3
+2.3 Écrire une fonction led(), appelable depuis le shell, permettant de faire clignoter la LED (PI1 sur la carte). Un paramètre de cette fonction configure la periode de clignotement. Une valeur de 0 maintient la LED éteinte. Le clignotement de la LED s’effectue dans une tâche. Il faut donc trouver un moyen de faire communiquer *proprement* la fonction led avec la tâche de clignotement.
+
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/698e773a-f284-4f4f-a824-127ef49843c0)
 
-2.4
+2.4 Écrire une fonction spam(), semblable à la fonction led() qui affiche du texte dans la liaison série au lieu de faire clignoter les LED. On peut ajouter comme argument le message à afficher et le nombre de valeurs à afficher. Ce genre de fonction peut être utile lorsque l’on travaille avec un capteur.
+
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/f3361c77-b6cf-49ec-a3a6-0d0549b0291c)
 
 3.1.1 Quel est le nom de la zone réservée à l’allocation dynamique ?
