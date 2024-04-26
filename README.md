@@ -104,6 +104,8 @@ Réponse : Si l'on ne respecte pas les priorités décrites précédemment, Free
 2.3
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/698e773a-f284-4f4f-a824-127ef49843c0)
 
+2.4
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/f3361c77-b6cf-49ec-a3a6-0d0549b0291c)
 
 3.1.1 Quel est le nom de la zone réservée à l’allocation dynamique ?
 Réponse : Tas (Heap). C'est la zone dans laquelle sont écrites les zones mémoires allouées dynamiquement(malloc() ou calloc()).
@@ -164,6 +166,8 @@ Réponse : On a créé le SUM dans la boucle pour mettre chaque valeur dans la t
 Le Résultat : 
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/7738fcb9-7dfe-4f5b-b5af-33e5dccf8cfc)
 
+Toutes les fonctions depuis SHELL:
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/78f2cb67-832d-48de-a373-8c9227af796e)
 
 
 
