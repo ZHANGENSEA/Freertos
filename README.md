@@ -151,8 +151,8 @@ Réponse : ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/514d
 4.2.2 Dans la fonction shell, écrivez un code permettant de récupérer la valeur du DEVID, et vérifiez si elle est correcte.
 Réponse : Selon le datasheet de l'ADXL345, on trouve que le registre 0x00 est "Read only" et la valeur est fixée à 0xE5, donc le résultat est correcte.
 ![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/70a14d57-65df-4ceb-9611-9e07222867fe)
-![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/15464d8b-966e-4b03-9b10-5a51b26b9655)
 
+![image](https://github.com/ZHANGENSEA/Freertos/assets/149954066/673a8023-f10a-482a-8263-1555d2cbbb49)
 
 4.2.3 Quelles sont les valeurs à mettre dans les registres INT_ENABLE et POWER_CTL pour démarrer la mesure et délencher une interruption à chaque mesure ?
 Réponse : Pour démarrer la mesure et délencher une interruption à chaque mesure,  la valeur doit mettre D7( DATA_READY) à 1 et les autres à 0 dans les registres INT_ENABLE ; D3(Measure) à 1 et les autres à 0 dans le registre POWER_CTL.
